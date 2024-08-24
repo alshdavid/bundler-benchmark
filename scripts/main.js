@@ -39,6 +39,6 @@ for (const [benchmark, enabled] of Object.entries(config.targets)) {
       ...(config.options[benchmark] || {})
     })
 
-    console.log(result)
+    console.log(`  ${entry.padStart(2)}: ${result.time}ms`)
   }
 }
