@@ -1,46 +1,63 @@
-import * as fs from 'node:fs'
-import * as path from 'node:path'
-import * as url from 'node:url'
-import webpack from 'webpack'
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as url from "node:url";
+import webpack from "webpack";
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 /** @returns {Promise<import('../../types.ts').BenchmarkResult>} */
 export async function run(
   /** @type {import('../../types.ts').BenchmarkOptions} */ options
 ) {
-  fs.rmSync(path.join(__dirname, 'dist'), { force: true, recursive: true })
+  fs.rmSync(path.join(__dirname, "dist"), { force: true, recursive: true });
 
-  const startTime = Date.now()
+  const startTime = Date.now();
+
+  /** @type {import('webpack').Configuration} */
+  const config = {
+    mode: "production",
+    entry: options.entries,
+    output: {
+      path: path.join(__dirname, "dist"),
+    },
+    devtool: false,
+    optimization: {
+      minimize: options.optimize,
+    },
+  };
+
+  if (options.sourceMaps) {
+    config.devtool = "source-map";
+  }
 
   const compiler = webpack({
-      mode: 'production',
-      entry: options.entries,
-      output: {
-        path: path.join(__dirname, 'dist'),
-      },
-      devtool: false,
-      optimization: {
-        minimize: options.optimize
+    mode: "production",
+    entry: options.entries,
+    output: {
+      path: path.join(__dirname, "dist"),
+    },
+    devtool: false,
+    optimization: {
+      minimize: options.optimize,
     },
   });
-  
+
   await new Promise((res, rej) => {
     compiler.run((err, stats) => {
       if (err) {
-        rej(err)
+        rej(err);
       } else {
-        res(stats)
+        res(stats);
       }
     });
-  })
-  
+  });
+
   return {
-    time: Date.now() - startTime
-  }
+    time: Date.now() - startTime,
+  };
 }
 
 if (process.argv[2]) {
-  const options = JSON.parse(atob(process.argv[2]))
-  const result = await run(options)
+  const options = JSON.parse(atob(process.argv[2]));
+  const result = await run(options);
 }

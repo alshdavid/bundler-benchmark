@@ -3,7 +3,8 @@ import * as path from 'node:path'
 import * as url from 'node:url'
 import * as os from 'node:os'
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 /** @returns {Promise<import('../../types.ts').BenchmarkResult>} */
 export async function run(
@@ -51,9 +52,15 @@ export async function run(
     entries: options.entries,
     config: path.join(__dirname, '.parcelrc'),
     cacheDir: path.join(__dirname, '.parcel-cache'),
+    additionalReporters: options.timingsReporter ? [
+      {
+        packageName: "./reporter.cjs",
+        resolveFrom: __filename
+      }
+    ] : [],
     defaultTargetOptions: {
-      shouldOptimize: options.optimize,
-      sourceMaps: options.sourceMaps,
+      shouldOptimize: !!options.optimize,
+      sourceMaps: !!options.sourceMaps,
       distDir: path.join(__dirname, 'dist'),
       outputFormat: 'esmodule'
     },
@@ -67,7 +74,20 @@ export async function run(
   }
 }
 
-if (process.argv[2]) {
+if (process.argv[2] && process.argv[2] !== 'build') {
   const options = JSON.parse(atob(process.argv[2]))
   const result = await run(options)
 }
+
+if (process.argv[2] && process.argv[2] === 'build') {
+  let entry = process.argv[3]
+  if (!path.isAbsolute(entry)) {
+    entry = path.join(process.cwd(), entry)
+  }
+  const result = await run({
+    entries: [entry],
+    optimize: false,
+    sourceMaps: false,
+  })
+  console.log(result)
+} 

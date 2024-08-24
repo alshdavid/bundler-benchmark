@@ -1,6 +1,7 @@
 export type BenchmarkOptions = {
   entries: Array<string>,
   optimize: boolean,
+  sourceMaps: boolean,
 }
 
 export type BenchmarkResult = {
