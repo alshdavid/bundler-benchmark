@@ -57,7 +57,21 @@ export async function run(
   };
 }
 
-if (process.argv[2]) {
+if (process.argv[2] && process.argv[2] !== "build") {
   const options = JSON.parse(atob(process.argv[2]));
   const result = await run(options);
+}
+
+if (process.argv[2] && process.argv[2] === "build") {
+  let entry = process.argv[3];
+  if (!path.isAbsolute(entry)) {
+    entry = path.join(process.cwd(), entry);
+  }
+  console.log(entry);
+  const result = await run({
+    entries: [entry],
+    optimize: false,
+    sourceMaps: true,
+  });
+  console.log(result);
 }

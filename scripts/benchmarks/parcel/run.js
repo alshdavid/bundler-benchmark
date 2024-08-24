@@ -62,7 +62,10 @@ export async function run(
       shouldOptimize: !!options.optimize,
       sourceMaps: !!options.sourceMaps,
       distDir: path.join(__dirname, 'dist'),
-      outputFormat: 'esmodule'
+      outputFormat: 'esmodule',
+      engines: {
+        browsers: ['last 1 Chrome version']
+      }
     },
     featureFlags: options.featureFlags
   })

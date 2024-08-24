@@ -9,5 +9,5 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["**/*.js"],
+  "include": ["**/*.js", "**/*.mjs", "**/*.cjs"],
 }

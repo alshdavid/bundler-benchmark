@@ -61,7 +61,7 @@ if (process.argv[2] && process.argv[2] === "build") {
   const result = await run({
     entries: [entry],
     optimize: false,
-    sourceMaps: true,
+    sourceMaps: false,
   });
   console.log(result);
 }
