@@ -3,6 +3,7 @@ import * as child_process from 'node:child_process'
 import * as path from 'node:path'
 import * as url from 'node:url'
 import YAML from 'yaml'
+import { type } from 'node:os'
 
 /** @type { string } */
 let __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -57,7 +58,7 @@ for (const [benchmark, enabled] of Object.entries(config.targets)) {
   }
 }
 
-function useSpawnSync(cmd, args) {
+function useSpawnSync(/** @type {string} */ cmd, /** @type {string[]} */ args) {
   const processResult = child_process.spawnSync(
       cmd,
       args,
