@@ -11,6 +11,7 @@ target/
 /benchmarks
 *.node
 bench.custom.json
+report.csv
 
 packages/mach_npm/cmd
 packages/mach_npm/README.md

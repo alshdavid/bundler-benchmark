@@ -34,10 +34,10 @@ export async function run(
   /** @type {typeof import('@parcel/core')} */
   let ParcelCore
   if (options.useLocal && useSources) {
-    console.log('parcel-v3 (sources)')
+    console.log('parcel (sources)')
     ParcelCore = (await import(path.join(localPath, 'packages', 'core', 'core', 'src', 'index.js'))).default
   } else if (options.useLocal) {
-    console.log('parcel-v3 (local)')
+    console.log('parcel (local)')
     ParcelCore = (await import(path.join(localPath, 'packages', 'core', 'core', 'lib', 'index.js'))).default
   } else {
     // @ts-expect-error

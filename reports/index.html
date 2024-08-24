@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="module">
+        google.charts.load('current', { 'packages': ['corechart', 'bar'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        async function drawChart() {
+            const csv = await fetch('report.csv').then(r => r.text());
+
+            const rawData = {}
+            for (const [bench, n, time] of csv.split('\n').map(l => l.split(','))) {
+                if (!bench || !n || !time) continue
+                if (!rawData[bench]) rawData[bench] = {}
+                rawData[bench][n] = parseInt(time, 10)
+            }
+
+            console.log(rawData)
+            const dataFmt = [
+                ['Benchmark'],
+            ]
+            for (const [bench, result] of Object.entries(rawData)) {
+                dataFmt[0].push(bench, { role: 'annotation' })
+                for (const [n, time] of Object.entries(result)) {
+                    let index = dataFmt.findIndex(r => r[0] === n)
+                    if (index === -1) {
+                        index = dataFmt.length
+                        dataFmt.push([n])
+                    }
+                    dataFmt[index].push(time, `${time}ms`)
+                }
+            }
+
+            console.log(dataFmt)
+
+            var data = google.visualization.arrayToDataTable(dataFmt);
+
+            var options = {
+                title: 'Bundler Performance',
+                chartArea: { width: '70%' },
+                annotations: {
+                    alwaysOutside: true,
+                    textStyle: {
+                        fontSize: 12,
+                        auraColor: 'none',
+                        color: '#555'
+                    },
+                    boxStyle: {
+                        stroke: '#ccc',
+                        strokeWidth: 1,
+                        gradient: {
+                            color1: '#f3e5f5',
+                            color2: '#f3e5f5',
+                            x1: '0%', y1: '0%',
+                            x2: '100%', y2: '100%'
+                        }
+                    }
+                },
+                vAxis: {
+                    title: 'Benchmark',
+                    minValue: 0,
+                },
+                hAxis: {
+                    title: 'Time (ms)'
+                },
+                orientation: 'vertical'
+            };
+
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="chart_div" style="width: 100%; height: 100%;"></div>
+</body>
+
+</html>

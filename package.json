@@ -5,7 +5,7 @@
     "./scripts/benchmarks/*"
   ],
   "scripts": {
-    "bench": "node ./scripts/main.js",
+    "bench": "node --max-old-space-size=7168 ./scripts/main.js",
     "configure": "node ./scripts/configure.js"
   }
 }

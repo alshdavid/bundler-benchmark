@@ -26,6 +26,8 @@ const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
 
 console.log(JSON.stringify(config, null, 2))
 
+fs.rmSync(path.join(__dirname, '..', 'report.csv'), { force: true, recursive: true })
+
 for (const [benchmark, enabled] of Object.entries(config.targets)) {
   if (!enabled) continue
 
@@ -39,6 +41,7 @@ for (const [benchmark, enabled] of Object.entries(config.targets)) {
       ...(config.options[benchmark] || {})
     })
 
+    fs.appendFileSync(path.join(__dirname, '..', 'report.csv'), `${benchmark},${entry},${result.time}\n`)
     console.log(`  ${entry.padStart(2)}: ${result.time}ms`)
   }
 }
