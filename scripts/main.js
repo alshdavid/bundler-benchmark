@@ -29,6 +29,10 @@ console.log(JSON.stringify(config, null, 2))
 
 fs.rmSync(path.join(__dirname, '..', 'report.csv'), { force: true, recursive: true })
 
+const base = config.entryType === 'static' 
+  ? '_entries_static'
+  : '_entries_dynamic'
+
 for (const [benchmark, enabled] of Object.entries(config.targets)) {
   if (!enabled) continue
 
@@ -40,7 +44,7 @@ for (const [benchmark, enabled] of Object.entries(config.targets)) {
       '--max-old-space-size=7168', 
       path.join(__dirname, "benchmarks", benchmark, "run.js"),
       btoa(JSON.stringify({
-        entries: [path.join(__dirname, '..', 'src', `index_${entry}.js`)],
+        entries: [path.join(__dirname, '..', 'src', base, `index_${entry}.js`)],
         optimize: config.optimize,
         ...(config.options[benchmark] || {})
       }))])

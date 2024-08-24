@@ -1,0 +1,53 @@
+# Import three-js using static or dynamic imports to test bundle splitting performance
+entryType: "static"
+# entryType: "dynamic"
+
+# Repeat benchmark for each entry
+entries: 
+  - "1"
+  - "10"
+  - "20"
+  - "30"
+  - "40"
+  - "50"
+  - "60"
+  - "70"
+  - "80"
+  - "90"
+  - "100"
+  - "110"
+  - "120"
+  - "130"
+  - "140"
+  - "150"
+  - "160"
+  - "170"
+  - "180"
+  - "190"
+  - "200"
+
+# Packaging optimizations
+optimize: false
+sourceMap: false
+
+# Which bundlers to include in the benchmarks
+targets: 
+  esbuild: true
+  parcel: true
+  rspack: true
+  parcel-v3: false
+  webpack: false
+
+# Bundler specific config
+options:
+  parcel:
+    useLocal: false
+    localPath: null
+    useSources: false
+    timingsReporter: false
+
+  parcel-v3:
+    useLocal: false
+    localPath: null
+    useSources: false
+    timingsReporter: false

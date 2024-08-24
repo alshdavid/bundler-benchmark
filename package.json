@@ -9,6 +9,7 @@
     "configure": "node ./scripts/configure.js"
   },
   "dependencies": {
-    "@types/node": "^22.5.0"
+    "@types/node": "*",
+    "yaml": "^2.5.0"
   }
 }

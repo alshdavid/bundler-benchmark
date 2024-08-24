@@ -37,3 +37,22 @@ nano bench.custom.json
 # Run benchmarks
 npm run bench
 ```
+
+### Running One Benchmark
+
+```bash
+node --max-old-space-size=7168 ./scripts/benchmarks/parcel-v3/run.js build ./src/index_50.js
+```
+
+### Profile
+
+Using [procmon](https://github.com/alshdavid/procmon)
+
+```bash
+procmon \
+  -r m1_profile \
+  -i 500 \
+  --no-disk \
+  -- \
+    node --max-old-space-size=7168 ./scripts/benchmarks/parcel-v3/run.js build ./src/index_200.js
+```

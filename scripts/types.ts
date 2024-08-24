@@ -11,6 +11,7 @@ export type BenchmarkResult = {
 export type BenchFunc = (options: BenchmarkOptions) => Promise<BenchmarkResult>
 
 export type BenchConfig = {
+  entryType: 'static' | 'dynamic'
   entries: Array<string>
   optimize: boolean
   targets: Record<string, boolean>,
