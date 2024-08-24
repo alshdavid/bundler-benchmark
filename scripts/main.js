@@ -2,6 +2,7 @@ import * as fs from 'node:fs'
 import * as child_process from 'node:child_process'
 import * as path from 'node:path'
 import * as url from 'node:url'
+import YAML from 'yaml'
 
 /** @type { string } */
 let __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -16,16 +17,16 @@ if (process.argv.slice(2).length) {
     configPath = path.join(process.cwd(), process.argv.slice(2)[0])
   }
 } else {
-  if (!fs.existsSync(path.join(__dirname, '..', 'bench.custom.json'))) {
-    fs.cpSync(path.join(__dirname, '..', 'bench.json'), path.join(__dirname, '..', 'bench.custom.json'))
+  if (!fs.existsSync(path.join(__dirname, '..', 'bench.custom.yml'))) {
+    fs.cpSync(path.join(__dirname, '..', 'bench.yml'), path.join(__dirname, '..', 'bench.custom.yml'))
   }
-  configPath = path.join(__dirname, '..', 'bench.custom.json') 
+  configPath = path.join(__dirname, '..', 'bench.custom.yml') 
 }
 
 /** @type {import('./types.ts').BenchConfig} */
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
+const config = YAML.parse(fs.readFileSync(configPath, 'utf8'))
 
-console.log(JSON.stringify(config, null, 2))
+console.log(YAML.stringify(config, null, 2))
 
 fs.rmSync(path.join(__dirname, '..', 'report.csv'), { force: true, recursive: true })
 

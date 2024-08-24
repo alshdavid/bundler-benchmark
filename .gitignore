@@ -11,6 +11,7 @@ target/
 /benchmarks
 *.node
 bench.custom.json
+bench.custom.yml
 report.csv
 
 packages/mach_npm/cmd
