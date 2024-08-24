@@ -1,4 +1,5 @@
 import * as fs from 'node:fs'
+import * as child_process from 'node:child_process'
 import * as path from 'node:path'
 import * as url from 'node:url'
 
@@ -33,15 +34,33 @@ for (const [benchmark, enabled] of Object.entries(config.targets)) {
 
   console.log(benchmark)
   for (const entry of config.entries) {
-    /** @type {{ run: import('./types.ts').BenchFunc }} */
-    const { run } = await import(path.join(__dirname, "benchmarks", benchmark, "run.js"))
-    const result = await run({
-      entries: [path.join(__dirname, '..', 'src', `index_${entry}.js`)],
-      optimize: config.optimize,
-      ...(config.options[benchmark] || {})
-    })
+    const startTime = Date.now()
+    
+    useSpawnSync('node', [
+      '--max-old-space-size=7168', 
+      path.join(__dirname, "benchmarks", benchmark, "run.js"),
+      btoa(JSON.stringify({
+        entries: [path.join(__dirname, '..', 'src', `index_${entry}.js`)],
+        optimize: config.optimize,
+        ...(config.options[benchmark] || {})
+      }))])
 
-    fs.appendFileSync(path.join(__dirname, '..', 'report.csv'), `${benchmark},${entry},${result.time}\n`)
-    console.log(`  ${entry.padStart(2)}: ${result.time}ms`)
+    const duration = Date.now() - startTime
+
+    fs.appendFileSync(path.join(__dirname, '..', 'report.csv'), `${benchmark},${entry},${duration}\n`)
+    console.log(`  ${entry.padStart(2)}: ${duration}ms`)
   }
+}
+
+function useSpawnSync(cmd, args) {
+  const processResult = child_process.spawnSync(
+      cmd,
+      args,
+      {
+          encoding: 'utf8',
+          shell: true,
+          stdio: 'inherit'
+      }
+  );
+  return processResult.stdout
 }

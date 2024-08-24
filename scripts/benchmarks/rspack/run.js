@@ -40,6 +40,7 @@ export async function run(
   }
 }
 
-// console.log(await run({
-//   entries: [path.join(__dirname, '../../../src/index_1.js')],
-// }))
+if (process.argv[2]) {
+  const options = JSON.parse(atob(process.argv[2]))
+  const result = await run(options)
+}

@@ -9,6 +9,5 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["scripts"],
-  "exclude": ["src"]
+  "include": ["**/*.js"],
 }

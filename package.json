@@ -5,7 +5,10 @@
     "./scripts/benchmarks/*"
   ],
   "scripts": {
-    "bench": "node --max-old-space-size=7168 ./scripts/main.js",
+    "bench": "node ./scripts/main.js",
     "configure": "node ./scripts/configure.js"
+  },
+  "dependencies": {
+    "@types/node": "^22.5.0"
   }
 }

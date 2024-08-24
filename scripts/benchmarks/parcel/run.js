@@ -66,3 +66,8 @@ export async function run(
     time: Date.now() - startTime
   }
 }
+
+if (process.argv[2]) {
+  const options = JSON.parse(atob(process.argv[2]))
+  const result = await run(options)
+}
