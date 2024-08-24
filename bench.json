@@ -4,16 +4,20 @@
   "targets": {
     "esbuild": true,
     "parcel": true,
-    "parcel-v3": true,
     "rspack": true,
+    "parcel-v3": false,
     "webpack": false
   },
   "options": {
     "parcel": {
-      "local": false
+      "useLocal": false,
+      "localPath": null,
+      "useSources": false
     },
     "parcel-v3": {
-      "local": false
+      "useLocal": false,
+      "localPath": null,
+      "useSources": false
     }
   }
 }

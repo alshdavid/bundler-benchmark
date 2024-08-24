@@ -5,8 +5,9 @@
     "moduleResolution": "NodeNext",
     "strict": true,
     "checkJs": true,
-    "declaration": true,
-    "noEmit": true
+    "declaration": false,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["scripts"],
   "exclude": ["src"]
