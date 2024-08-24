@@ -1,0 +1,8 @@
+{
+  "name": "@alshdavid/bundler-benchmarks-webpack",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "webpack": "*"
+  }
+}

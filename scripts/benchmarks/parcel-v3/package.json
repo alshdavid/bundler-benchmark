@@ -1,0 +1,11 @@
+{
+  "name": "@alshdavid/bundler-benchmarks-parcel-v3",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@parcel/core": "canary",
+    "@parcel/config-default": "canary",
+    "@parcel/fs": "canary",
+    "parcel": "canary"
+  }
+}

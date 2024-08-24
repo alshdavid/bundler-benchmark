@@ -1,0 +1,19 @@
+{
+  "entries": ["1", "10", "20", "30", "40", "50"],
+  "optimize": false,
+  "targets": {
+    "esbuild": true,
+    "parcel": true,
+    "parcel-v3": true,
+    "rspack": true,
+    "webpack": false
+  },
+  "options": {
+    "parcel": {
+      "local": false
+    },
+    "parcel-v3": {
+      "local": false
+    }
+  }
+}

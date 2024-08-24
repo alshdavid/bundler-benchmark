@@ -1,0 +1,13 @@
+{
+  "name": "@alshdavid/bundler-benchmarks",
+  "version": "1.0.0",
+  "workspaces": [
+    "./scripts/benchmarks/*"
+  ],
+  "scripts": {
+    "start": "node --import tsx ./scripts/benchmark.ts"
+  },
+  "dependencies": {
+    "tsx": "*"
+  }
+}
